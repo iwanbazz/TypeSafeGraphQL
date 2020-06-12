@@ -30,3 +30,20 @@ schema.queryType({
     t.crud.users();
   },
 });
+
+schema.mutationType({
+  definition(t) {
+    t.field("bigRedButton", {
+      type: "String",
+      async resolve(_parent, _args, ctx) {
+        const { count } = await ctx.db.user.deleteMany({});
+        return `${count} user(s) destroyed. Infinity gauntlet is working.`;
+      },
+    });
+    t.crud.createOneuser();
+    t.crud.deleteOneuser();
+    t.crud.deleteManyuser();
+    t.crud.updateOneuser();
+    t.crud.updateManyuser();
+  },
+});
